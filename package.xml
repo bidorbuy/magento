@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package>
+    <name>bidorbuyStoreIntegrator</name>
+    <channel>community</channel>
+    <extends/>
+    <summary>
+        The bidorbuy store integrator allows you to get products from your online store listed on bidorbuy quickly and
+        easily.
+    </summary>
+    <description>
+        Expose your products to the bidorbuy audience - one of the largest audiences of online shoppers in
+        South Africa&#xD;
+        Store updates will be fed through to bidorbuy automatically, within 24 hours so you can be sure that your
+        store
+        is in sync within your bidorbuy listings.&#xD;
+        All products will appear as Buy Now listings.&#xD;
+        There is no listing fee just a small commission on successful sales. View
+        fees(http://support.bidorbuy.co.za/index.php?/Knowledgebase/Article/View/22/0/fee-rate-card---what-we-charge).&#xD;
+        Select as many product categories to list on bidorbuy as you like.&#xD;
+        No technical requirements necessary.&#xD;
+        &#xD;
+        To make use of this plugin, you'll need to be an advanced seller on bidorbuy.&#xD;
+        &#xD;
+        Register on bidorbuy (https://www.bidorbuy.co.za/jsp/registration/UserRegistration.jsp?action=Modify)&#xD;
+        Apply to become an advanced seller
+        (https://www.bidorbuy.co.za/jsp/seller/registration/UserSellersRequest.jsp)&#xD;
+        &#xD;
+        Once you integrate with bidorbuy, you will be contacted by a bidorbuy representative to guide you through
+        the
+        process.
+    </description>
+    <authors>
+        <author>
+            <name>bidorbuy</name>
+            <user>bidorbuy</user>
+            <email>gerd.naschenweng@bidorbuy.co.za</email>
+        </author>
+    </authors>
+    <date>2017-06-06</date>
+    <time>09:29:23</time>
+    <version>2.0.6</version>
+    <stability>stable</stability>
+    <license>http://bidorbuy.co.za</license>
+    <notes>N/A</notes>
+    <contents>
+        <target name="mageetc"><dir name="modules"><file name="Bidorbuy_StoreIntegrator.xml"/></dir></target><target name="magedesign"><dir name="adminhtml"><dir name="default"><dir name="default"><dir name="template"><dir name="bidorbuy"><dir name="system"><dir name="config"><dir name="fieldset"><file name="hint.phtml"/></dir></dir></dir><dir name="storeintegrator"><file name="categories.phtml"/></dir></dir></dir><dir name="layout"><file name="bidorbuy.xml"/></dir></dir></dir></dir></target><target name="magelib"><dir name="Bidorbuy"><dir name="vendor"><dir name="composer"><file name="autoload_real.php"/><file name="autoload_static.php"/><file name="autoload_namespaces.php"/><file name="autoload_psr4.php"/><file name="ClassLoader.php"/><file name="autoload_classmap.php"/><file name="LICENSE"/></dir><dir name="com.extremeidea.php"><dir name="multirequest"><file name="build.properties"/><file name="Handler.php"/><file name="Queue.php"/><file name="Callbacks.php"/><file name="Defaults.php"/><file name="Request.php"/><file name="Session.php"/><file name="index.html"/></dir><dir name="log4php"><dir name="renderers"><file name="LoggerRenderer.php"/><file name="LoggerRendererException.php"/><file name="LoggerRendererDefault.php"/><file name="LoggerRendererMap.php"/></dir><dir name="pattern"><file name="LoggerPatternConverterLine.php"/><file name="LoggerPatternConverterRelative.php"/><file name="LoggerPatternConverterMessage.php"/><file name="LoggerPatternConverterFile.php"/><file name="LoggerPatternConverterLogger.php"/><file name="LoggerPatternConverterThrowable.php"/><file name="LoggerPatternConverterSession.php"/><file name="LoggerPatternConverterDate.php"/><file name="LoggerPatternConverterLevel.php"/><file name="LoggerPatternConverterClass.php"/><file name="LoggerPatternConverter.php"/><file name="LoggerPatternConverterLiteral.php"/><file name="LoggerPatternConverterCookie.php"/><file name="LoggerPatternConverterServer.php"/><file name="LoggerPatternConverterProcess.php"/><file name="LoggerPatternConverterMDC.php"/><file name="LoggerPatternConverterRequest.php"/><file name="LoggerPatternConverterSessionID.php"/><file name="LoggerPatternConverterSuperglobal.php"/><file name="LoggerPatternConverterLocation.php"/><file name="LoggerPatternConverterNDC.php"/><file name="LoggerPatternConverterNewLine.php"/><file name="LoggerPatternConverterMethod.php"/><file name="LoggerPatternConverterEnvironment.php"/></dir><dir name="filters"><file name="LoggerFilterLevelRange.php"/><file name="LoggerFilterStringMatch.php"/><file name="LoggerFilterDenyAll.php"/><file name="LoggerFilterLevelMatch.php"/></dir><dir name="layouts"><file name="LoggerLayoutTTCC.php"/><file name="LoggerLayoutSimple.php"/><file name="LoggerLayoutXml.php"/><file name="LoggerLayoutSerialized.php"/><file name="LoggerLayoutPattern.php"/><file name="LoggerLayoutHtml.php"/></dir><dir name="configurators"><file name="LoggerConfigurationAdapterINI.php"/><file name="LoggerConfigurationAdapterPHP.php"/><file name="LoggerConfiguratorDefault.php"/><file name="LoggerConfigurationAdapter.php"/><file name="LoggerConfigurationAdapterXML.php"/></dir><dir name="xml"><file name="log4php.dtd"/></dir><dir name="helpers"><file name="LoggerOptionConverter.php"/><file name="LoggerUtils.php"/><file name="LoggerFormattingInfo.php"/><file name="LoggerPatternParser.php"/></dir><dir name="appenders"><file name="LoggerAppenderFirePHP.php"/><file name="LoggerAppenderNull.php"/><file name="LoggerAppenderDailyFile.php"/><file name="LoggerAppenderRollingFile.php"/><file name="LoggerAppenderSyslog.php"/><file name="LoggerAppenderEcho.php"/><file name="LoggerAppenderConsole.php"/><file name="LoggerAppenderMailEvent.php"/><file name="LoggerAppenderPhp.php"/><file name="LoggerAppenderMongoDB.php"/><file name="LoggerAppenderPDO.php"/><file name="LoggerAppenderFile.php"/><file name="LoggerAppenderSocket.php"/><file name="LoggerAppenderMail.php"/></dir><file name="build.properties"/><file name="LoggerReflectionUtils.php"/><file name="LoggerFilter.php"/><file name="LoggerHierarchy.php"/><file name="LoggerRoot.php"/><file name="LoggerConfigurator.php"/><file name="Logger.php"/><file name="LoggerLayout.php"/><file name="LoggerAppender.php"/><file name="LoggerAutoloader.php"/><file name="LoggerMDC.php"/><file name="LoggerThrowableInformation.php"/><file name="LoggerAppenderPool.php"/><file name="LoggerNDC.php"/><file name="LoggerLoggingEvent.php"/><file name="LoggerConfigurable.php"/><file name="LoggerLevel.php"/><file name="LoggerException.php"/><file name="index.html"/><file name="LoggerLocationInfo.php"/></dir></dir><dir name="com.extremeidea.bidorbuy"><dir name="storeintegrator-core"><dir name="core"><dir name="http"><file name="ServerBag.php"/><file name="ParameterBag.php"/><file name="Request.php"/></dir><file name="MySQLi.php"/><file name="Logger.php"/><file name="MySQL.php"/><file name="Warnings.php"/><file name="Debug.php"/><file name="GA.php"/><file name="Queries.php"/><file name="Settings.php"/><file name="log4php.xml"/><file name="Version.php"/><file name="Db.php"/><file name="StaticHolder.php"/><file name="Core.php"/><file name="Tradefeed.php"/></dir><dir name="assets"><dir name="js"><file name="admin.js"/></dir></dir><dir name="data"><file name=".keep"/></dir><dir name="logs"><file name=".keep"/></dir><file name="build.properties"/><file name=".htaccess"/></dir></dir><file name="autoload.php"/></dir></dir></target><target name="mageskin"><dir name="adminhtml"><dir name="default"><dir name="default"><dir name="bidorbuy"><file name="admin.js"/><file name="bidorbuy.png"/><file name="admin.css"/></dir></dir></dir></dir></target><target name="magelocal"><dir name="Bidorbuy"><dir name="StoreIntegrator"><dir name="Model"><dir name="System"><dir name="Config"><dir name="Source"><file name="OnOff.php"/><file name="ExportCurrency.php"/><file name="LoggingLevel.php"/><file name="CompressLibrary.php"/></dir></dir></dir><file name="Observer.php"/></dir><dir name="etc"><file name="adminhtml.xml"/><file name="system.xml"/><file name="config.xml"/></dir><dir name="Block"><dir name="Adminhtml"><dir name="System"><dir name="Config"><dir name="Fieldset"><file name="Hint.php"/></dir><file name="Logs.php"/><file name="ExcludeCategories.php"/><file name="Baa.php"/><file name="LogsTitle.php"/><file name="Debug.php"/><file name="TokenExportUrl.php"/><file name="TokenDownloadUrl.php"/><file name="Version.php"/><file name="Links.php"/></dir></dir><dir name="Catalog"><dir name="Product"><dir name="Edit"><dir name="Tab"><file name="Categories.php"/></dir></dir></dir></dir></dir></dir><dir name="sql"><dir name="bidorbuy_setup"><file name="mysql4-install-1.0.php"/></dir></dir><dir name="controllers"><dir name="Adminhtml"><dir name="Catalog"><file name="ProductController.php"/></dir></dir><file name="IndexController.php"/></dir><dir name="Helper"><file name="Bidorbuy.php"/><file name="Data.php"/></dir></dir></dir></target>
+    </contents>
+    <dependencies>
+        <required>
+            <php>
+                <min>5.2.0</min>
+                <max>6.0.0</max>
+            </php>
+            <package>
+                <name>Mage_Core_Modules</name>
+                <channel>community</channel>
+                <min>1.7.0.0</min>
+                <max>1.9.9.9</max>
+            </package>
+        </required>
+    </dependencies>
+</package>

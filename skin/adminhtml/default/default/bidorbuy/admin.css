@@ -1,0 +1,39 @@
+#ctrl-c-message {
+    display: none;
+    position: absolute;
+    text-align: center;
+    padding: 10px;
+    width: 120px;
+    background: #43D8FA;
+    color: white;
+    font-size: large;
+    border-radius: 8px;
+    z-index: 99999999;
+}
+/*
+h3.bidorbuy-header {
+    background: url(bidorbuy.png) no-repeat 0 0;
+    height: 60px;
+    overflow: hidden;
+    padding-left: 20px;;
+    width: 240px;
+    text-indent: -9999px;
+}
+*/
+#bobsi-icon-trade-feed {
+    background: url(bidorbuy.png) no-repeat 0 0;
+    width: 240px;
+    height: 60px;
+    margin-right: 5px;
+    display: inline-block;
+}
+
+#bobsi-adv {
+    display: inline-block;
+    float: right;
+}
+
+#tokenDownloadUrl, #tokenExportUrl {
+    width: 100%;
+    margin-bottom: 3px;
+}

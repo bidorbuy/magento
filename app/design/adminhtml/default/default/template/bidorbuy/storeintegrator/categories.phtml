@@ -1,0 +1,123 @@
+<?php
+$categoriesBlock = new Bidorbuy_StoreIntegrator_Block_Adminhtml_Catalog_Product_Edit_Tab_Categories();
+?>
+
+<input type="hidden" name="groups[exportCriteria][fields][excludeCategories][value]"
+       id="bidorbuystoreintegrator_exportCriteria_excludeCategories"
+       value="<?php echo $categoriesBlock->getIdsString() ?>"/>
+<div id="product-categories" class="tree"></div>
+
+<script type="text/javascript">
+    Ext.EventManager.onDocumentReady(function () {
+        var categoryLoader = new Ext.tree.TreeLoader({
+            dataUrl: '<?php echo $categoriesBlock->getLoadTreeUrl() ?>'
+        });
+
+        categoryLoader.createNode = function (config) {
+            config.uiProvider = Ext.tree.CheckboxNodeUI;
+            var node;
+            if (config.children && !config.children.length) {
+                delete(config.children);
+                node = new Ext.tree.AsyncTreeNode(config);
+
+            } else {
+                node = new Ext.tree.TreeNode(config);
+            }
+            return node;
+        };
+
+        categoryLoader.on("beforeload", function (treeLoader, node) {
+            treeLoader.baseParams.category = node.attributes.id;
+        });
+
+        categoryLoader.on("load", function (treeLoader, node, config) {
+            varienWindowOnload();
+        });
+
+        var tree = new Ext.tree.TreePanel('product-categories', {
+            animate: true,
+            loader: categoryLoader,
+            enableDD: false,
+            containerScroll: true,
+            rootUIProvider: Ext.tree.CheckboxNodeUI,
+            selModel: new Ext.tree.CheckNodeMultiSelectionModel(),
+            rootVisible: true
+        });
+
+        tree.on('check', function (node) {
+            if (node.attributes.checked) {
+                categoryAdd(node.id);
+            } else {
+                categoryRemove(node.id);
+            }
+            varienElementMethods.setHasChanges(node.getUI().checkbox);
+        }, tree);
+
+        var checkedRoot = '<?php echo $categoriesBlock->getIdsString() ?>'.split(',').indexOf('0') != -1;
+
+        // set the root node
+        var root = new Ext.tree.TreeNode({
+            text: 'Uncategorized',
+            draggable: false,
+            checked: checkedRoot,
+            id: '0',
+            disabled: false,
+            uiProvider: Ext.tree.CheckboxNodeUI
+        });
+
+        tree.setRootNode(root);
+        buildCategoryTree(root, <?php echo $categoriesBlock->getTreeJson() ?>);
+        tree.addListener('click', categoryClick.createDelegate(this));
+
+        // render the tree
+        tree.render();
+        root.expand();
+        //tree.expandAll();
+    });
+
+    function buildCategoryTree(parent, config) {
+        if (!config) return null;
+
+        if (parent && config && config.length) {
+            for (var i = 0; i < config.length; i++) {
+                config[i].uiProvider = Ext.tree.CheckboxNodeUI;
+                var node;
+                var _node = Object.clone(config[i]);
+                if (_node.children && !_node.children.length) {
+                    delete(_node.children);
+                    node = new Ext.tree.AsyncTreeNode(_node);
+
+                } else {
+                    node = new Ext.tree.TreeNode(config[i]);
+                }
+                parent.appendChild(node);
+                node.loader = node.getOwnerTree().loader;
+                if (config[i].children) {
+                    buildCategoryTree(node, config[i].children);
+                }
+            }
+        }
+    }
+
+    function categoryClick(node, e) {
+        if (node.disabled) {
+            return;
+        }
+        node.getUI().check(!node.getUI().checked());
+        varienElementMethods.setHasChanges(Event.element(e), e);
+    }
+    ;
+    function categoryAdd(id) {
+        var ids = $('bidorbuystoreintegrator_exportCriteria_excludeCategories').value.split(',');
+        if (-1 == ids.indexOf(id) && id != 1) ids.push(id);
+        $('bidorbuystoreintegrator_exportCriteria_excludeCategories').value = ids.join(',');
+    }
+    function categoryRemove(id) {
+        var ids = $('bidorbuystoreintegrator_exportCriteria_excludeCategories').value.split(',');
+        // bug #7654 fixed
+        while (-1 != ids.indexOf(id)) {
+            ids.splice(ids.indexOf(id), 1);
+        }
+        $('bidorbuystoreintegrator_exportCriteria_excludeCategories').value = ids.join(',');
+    }
+</script>
