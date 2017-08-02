@@ -5,8 +5,9 @@
  * This software is the proprietary information of Bidorbuy.
  *
  * All Rights Reserved.
- * Modification, redistribution and use in source and binary forms, with or without modification
- * are not permitted without prior written approval by the copyright holder.
+ * Modification, redistribution and use in source and binary forms, with or without
+ * modification are not permitted without prior written approval by the copyright
+ * holder.
  *
  * Vendor: EXTREME IDEA LLC http://www.extreme-idea.com
  */
@@ -21,7 +22,11 @@ class Bidorbuy_StoreIntegrator_IndexController extends Mage_Core_Controller_Fron
      */
     public $shippingMethodsTitles = array();
 
-    public function __construct(Zend_Controller_Request_Abstract $request, Zend_Controller_Response_Abstract $response, array $invokeArgs = array()) {
+    public function __construct(
+        Zend_Controller_Request_Abstract $request, 
+        Zend_Controller_Response_Abstract $response, 
+        array $invokeArgs = array()
+    ) {
         $this->shippingMethodsTitles = $this->getShippingMethodsTitles();
 //        $this->onOffCache(0);
 
@@ -29,9 +34,13 @@ class Bidorbuy_StoreIntegrator_IndexController extends Mage_Core_Controller_Fron
     }
 
     /**
+     * On/Off cache.
+     *
      * @param bool $onOff - true - enable caching, false - disable caching.
+     *
+     * @return void
      */
-    private function onOffCache($onOff = true) {
+    private function onOffCache($onOff = TRUE) {
         $onOff = (bool)$onOff;
 
         if (!$onOff) {
@@ -61,30 +70,72 @@ class Bidorbuy_StoreIntegrator_IndexController extends Mage_Core_Controller_Fron
             'y' == $this->getRequest()->getParam('phpinfo', 'n'));
     }
 
+    /**
+     * Download XML
+     * 
+     * @param string $token token
+     *
+     * @return void
+     */
     public function download($token) {
         bobsi\StaticHolder::getBidorbuyStoreIntegrator()->download($token);
     }
 
+    /**
+     * Download logs
+     *
+     * @param string $token token
+     *
+     * @return void
+     */
     public function downloadl($token) {
         bobsi\StaticHolder::getBidorbuyStoreIntegrator()->downloadl($token);
     }
 
-    public function version($token, $phpinfo = false) {
+    /**
+     * Show php info
+     *
+     * @param string $token token
+     * @param bool $phpinfo flag
+     *
+     * @return void
+     */
+    public function version($token, $phpinfo = FALSE) {
         bobsi\StaticHolder::getBidorbuyStoreIntegrator()->showVersion($token, $phpinfo);
     }
 
+    /**
+     * Export action
+     *
+     * @return void
+     */
     public function exportAction() {
-        $this->export($this->getRequest()->getParam(bobsi\Settings::paramToken), $this->getRequest()->getParam(bobsi\Settings::paramIds));
+        $this->export(
+            $this->getRequest()->getParam(bobsi\Settings::paramToken), 
+            $this->getRequest()->getParam(bobsi\Settings::paramIds)
+        );
     }
 
-    private function export($token, $productsIds = false) {
+    /**
+     * Export
+     *
+     * @param string $token token
+     * @param bool $productsIds product ids
+     *
+     *@return void
+     */
+    private function export($token, $productsIds = FALSE) {
         $exportConfiguration = array(
             bobsi\Settings::paramIds => $productsIds,
-            bobsi\Tradefeed::settingsNameExcludedAttributes => array('Width', 'Height', 'Length', bobsi\Tradefeed::nameProductAttrShippingWeight),
+            bobsi\Tradefeed::settingsNameExcludedAttributes => array(
+                'Width', 'Height', 'Length', bobsi\Tradefeed::nameProductAttrShippingWeight
+            ),
             bobsi\Settings::paramCallbackGetProducts => array($this, 'getAllProducts'),
             bobsi\Settings::paramCallbackGetBreadcrumb => array($this, 'getBreadcrumb'),
             bobsi\Settings::paramCallbackExportProducts => array($this, 'exportProducts'),
-            bobsi\Settings::paramCategories => Mage::helper('storeintegrator/data')->getExportCategoriesIds(bobsi\StaticHolder::getBidorbuyStoreIntegrator()->getSettings()->getExcludeCategories()),
+            bobsi\Settings::paramCategories => Mage::helper('storeintegrator/data')->getExportCategoriesIds(
+                bobsi\StaticHolder::getBidorbuyStoreIntegrator()->getSettings()->getExcludeCategories()
+            ),
             bobsi\Settings::paramExtensions => array(),
         );
 
@@ -92,7 +143,8 @@ class Bidorbuy_StoreIntegrator_IndexController extends Mage_Core_Controller_Fron
         $attributes = Mage::getResourceModel('catalog/product_attribute_collection')->getItems();
         foreach ($attributes as $attribute) {
             if (!$this->isAttributeUsedInProductTitle($attribute)) {
-                $exportConfiguration[bobsi\Tradefeed::settingsNameExcludedAttributes][] = $attribute->getFrontendLabel();
+                $exportConfiguration[bobsi\Tradefeed::settingsNameExcludedAttributes][] = 
+                    $attribute->getFrontendLabel();
             }
         }
 
@@ -129,7 +181,14 @@ class Bidorbuy_StoreIntegrator_IndexController extends Mage_Core_Controller_Fron
             $productsArray = Mage::getModel('catalog/product')->getCollection()
                 ->addAttributeToSelect('status')
                 ->addFieldToFilter('status', Mage_Catalog_Model_Product_Status::STATUS_ENABLED)
-                ->joinField('category_product', 'catalog/category_product', 'category_id', 'product_id = entity_id', null, 'left');
+                ->joinField(
+                    'category_product', 
+                    'catalog/category_product', 
+                    'category_id', 
+                    'product_id = entity_id', 
+                    NULL, 
+                    'left'
+                );
 
             $productsArray->getSelect()->where('at_category_product.category_id IS NULL');
         }
@@ -148,9 +207,22 @@ class Bidorbuy_StoreIntegrator_IndexController extends Mage_Core_Controller_Fron
             ->getItems());
     }
 
-    public function &exportProducts(array &$productsIds, &$exportConfiguration = array()) {
-        $exportQuantityMoreThan = bobsi\StaticHolder::getBidorbuyStoreIntegrator()->getSettings()->getExportQuantityMoreThan();
-        $defaultStockQuantity = bobsi\StaticHolder::getBidorbuyStoreIntegrator()->getSettings()->getDefaultStockQuantity();
+    /**
+     * Export Products 
+     * 
+     * @param array $productsIds ids 
+     * @param array $exportConfiguration configuration 
+     *
+     * @return array
+     */
+    public function exportProducts(array $productsIds, $exportConfiguration = array()) {
+        $exportQuantityMoreThan = bobsi\StaticHolder::getBidorbuyStoreIntegrator()
+            ->getSettings()
+            ->getExportQuantityMoreThan();
+        
+        $defaultStockQuantity = bobsi\StaticHolder::getBidorbuyStoreIntegrator()
+            ->getSettings()
+            ->getDefaultStockQuantity();
 
         $exportProducts = array();
         foreach ($productsIds as $product) {
@@ -169,7 +241,8 @@ class Bidorbuy_StoreIntegrator_IndexController extends Mage_Core_Controller_Fron
             bobsi\StaticHolder::getBidorbuyStoreIntegrator()->logInfo('Processing product id: ' . $product->getId());
 
             if ($product->getStatus() != Mage_Catalog_Model_Product_Status::STATUS_ENABLED) {
-                bobsi\StaticHolder::getBidorbuyStoreIntegrator()->logInfo('Product status: disabled. Product id: ' . $product->getId());
+                bobsi\StaticHolder::getBidorbuyStoreIntegrator()
+                    ->logInfo('Product status: disabled. Product id: ' . $product->getId());
                 continue;
             }
 
@@ -180,26 +253,39 @@ class Bidorbuy_StoreIntegrator_IndexController extends Mage_Core_Controller_Fron
                 if (intval($p[bobsi\Tradefeed::nameProductPrice]) > 0) {
                     $exportProducts[] = $p;
                 } else {
-                    bobsi\StaticHolder::getBidorbuyStoreIntegrator()->logInfo('Product price <= 0, skipping, product id: ' . $product->getId());
+                    bobsi\StaticHolder::getBidorbuyStoreIntegrator()
+                        ->logInfo('Product price <= 0, skipping, product id: ' . $product->getId());
                 }
             } else {
-                bobsi\StaticHolder::getBidorbuyStoreIntegrator()->logInfo('Price = 0 or QTY is not enough to export product id: ' . $product->getId());
+                bobsi\StaticHolder::getBidorbuyStoreIntegrator()
+                    ->logInfo('Price = 0 or QTY is not enough to export product id: ' . $product->getId());
             }
         }
         return $exportProducts;
     }
 
+    /**
+     * Build export product
+     *
+     * @param Mage_Catalog_Model_Product $product product
+     * @param array $categoriesMatching categories matching
+     *
+     * @return array
+     */
     private function &buildExportProduct(Mage_Catalog_Model_Product &$product, $categoriesMatching) {
         $exportedProduct = array();
-        $hasParent = false;
-        $parent = false;
+        $hasParent = FALSE;
+        $parent = FALSE;
 
         //Do we have parent?
         if ($product->getTypeId() == 'simple') {
             $parentIds = Mage::getModel('catalog/product_type_grouped')->getParentIdsByChild($product->getId());
-            if (!$parentIds) $parentIds = Mage::getModel('catalog/product_type_configurable')->getParentIdsByChild($product->getId());
+            if (!$parentIds) {
+                $parentIds = Mage::getModel('catalog/product_type_configurable')
+                    ->getParentIdsByChild($product->getId());
+            }
             if (isset($parentIds[0])) {
-                $hasParent = true;
+                $hasParent = TRUE;
                 /* @var $parent Mage_Catalog_Model_Product */
                 $parent = Mage::getModel('catalog/product')->load($parentIds[0]);
             }
@@ -211,7 +297,9 @@ class Bidorbuy_StoreIntegrator_IndexController extends Mage_Core_Controller_Fron
 
         $exportedProduct[bobsi\Tradefeed::nameProductCode] = $product->getId();
         if ($hasParent) {
-            $exportedProduct[bobsi\Tradefeed::nameProductCode] = $parent->getId() . '-' . $exportedProduct[bobsi\Tradefeed::nameProductCode];
+            $exportedProduct[bobsi\Tradefeed::nameProductCode] = $parent->getId() 
+                . '-' 
+                . $exportedProduct[bobsi\Tradefeed::nameProductCode];
         }
 
         if (strlen($product->getSku())) {
@@ -224,16 +312,26 @@ class Bidorbuy_StoreIntegrator_IndexController extends Mage_Core_Controller_Fron
         foreach ($categoriesMatching as $catId) {
             $categoriesBreadcrumbs[] = $this->getBreadcrumb($catId);
         }
-        $exportedProduct[bobsi\Tradefeed::nameProductCategory] = implode(bobsi\Tradefeed::categoryNameDelimiter, $categoriesBreadcrumbs);
+        $exportedProduct[bobsi\Tradefeed::nameProductCategory] = implode(
+            bobsi\Tradefeed::categoryNameDelimiter, 
+            $categoriesBreadcrumbs
+        );
 
         $priceWithoutReduct = $product->getPrice(); //Regular price
-        $priceFinal = Mage::helper('tax')->getPrice($product, $product->getFinalPrice()); //Regular price + Taxes + Discounts
+        //Regular price + Taxes + Discounts
+        $priceFinal = Mage::helper('tax')->getPrice($product, $product->getFinalPrice()); 
 
         $currentCurrencyCode = Mage::app()->getStore()->getCurrentCurrencyCode();
         $exportCurrency = Mage::getStoreConfig('bidorbuystoreintegrator/exportConfiguration/exportCurrency');
         if ($exportCurrency) {
-            $priceWithoutReduct = Mage::helper('directory/data')->currencyConvert($product->getPrice(), $currentCurrencyCode, $exportCurrency); //Regular price
-            $priceFinal = Mage::helper('directory/data')->currencyConvert(Mage::helper('tax')->getPrice($product, $product->getFinalPrice()), $currentCurrencyCode, $exportCurrency); //Regular price + Taxes + Discounts
+            $priceWithoutReduct = Mage::helper('directory/data')
+                ->currencyConvert($product->getPrice(), $currentCurrencyCode, $exportCurrency); //Regular price
+            $priceFinal = Mage::helper('directory/data')
+                ->currencyConvert(
+                    Mage::helper('tax')->getPrice($product, $product->getFinalPrice()), 
+                    $currentCurrencyCode, 
+                    $exportCurrency
+                ); //Regular price + Taxes + Discounts
         }
 
         if ($priceFinal < $priceWithoutReduct) {
@@ -250,8 +348,10 @@ class Bidorbuy_StoreIntegrator_IndexController extends Mage_Core_Controller_Fron
             $exportedProduct[bobsi\Tradefeed::nameProductShippingClass] = implode(', ', $this->shippingMethodsTitles);
         }
 
-        $exportedProduct[bobsi\Tradefeed::nameProductSummary] = Mage::helper('catalog/output')->productAttribute($product, $product->getShortDescription(), 'shortDescription');
-        $exportedProduct[bobsi\Tradefeed::nameProductDescription] = Mage::helper('catalog/output')->productAttribute($product, $product->getDescription(), 'description');
+        $exportedProduct[bobsi\Tradefeed::nameProductSummary] = Mage::helper('catalog/output')
+            ->productAttribute($product, $product->getShortDescription(), 'shortDescription');
+        $exportedProduct[bobsi\Tradefeed::nameProductDescription] = Mage::helper('catalog/output')
+            ->productAttribute($product, $product->getDescription(), 'description');
 
         if (in_array('manufacturer', array_keys($product->getAttributes()))) {
             $exportedProduct[bobsi\Tradefeed::nameProductAttributes] = array(
@@ -262,29 +362,39 @@ class Bidorbuy_StoreIntegrator_IndexController extends Mage_Core_Controller_Fron
         if (in_array('weight', array_keys($product->getAttributes()))) {
             $weight = $product->getWeight();
             if (is_numeric($weight) && $weight > 0) {
-                $exportedProduct[bobsi\Tradefeed::nameProductAttributes][bobsi\Tradefeed::nameProductAttrShippingWeight] = number_format($weight, 2, '.', '');
-                //$exportedProduct[bobsi\Tradefeed::nameProductAttributes][bobsi\Tradefeed::nameProductAttrWeight] = intval($weight);
+                $farg = bobsi\Tradefeed::nameProductAttributes;
+                $sarg = bobsi\Tradefeed::nameProductAttrShippingWeight;
+                $exportedProduct[$farg][$sarg] = number_format($weight, 2, '.', '');
+                //$exportedProduct[bobsi\Tradefeed::nameProductAttributes][bobsi\Tradefeed::nameProductAttrWeight]
+                // = intval($weight);
             }
         }
 
         foreach ($product->getAttributes() as $attribute) {
             /* @var $attribute Mage_Catalog_Model_Resource_Eav_Attribute */
             if ($this->isAttributeUsedInFeed($attribute)) {
-                $attributeValue = $product->getResource()->getAttribute($attribute->getAttributeCode())->getFrontend()->getValue($product);
+                $attributeValue = $product->getResource()
+                    ->getAttribute($attribute->getAttributeCode())->getFrontend()->getValue($product);
                 //manufacturer was added as `Brand` before
-                if ($attributeValue && !empty($attributeValue) && $attribute->getAttributeCode() != 'manufacturer')
-                    $exportedProduct[bobsi\Tradefeed::nameProductAttributes][$attribute->getFrontendLabel()] = $attributeValue;
+                if ($attributeValue && !empty($attributeValue) && $attribute->getAttributeCode() != 'manufacturer') {
+                    $flabel = $attribute->getFrontendLabel();
+                    $exportedProduct[bobsi\Tradefeed::nameProductAttributes][$flabel] = $attributeValue;
+                }
             }
         }
 
-        $exportedProduct[bobsi\Tradefeed::nameProductAvailableQty] = $this->calcProductQuantity($product, bobsi\StaticHolder::getBidorbuyStoreIntegrator()->getSettings()->getDefaultStockQuantity());
+        $exportedProduct[bobsi\Tradefeed::nameProductAvailableQty] = $this->calcProductQuantity(
+            $product, bobsi\StaticHolder::getBidorbuyStoreIntegrator()->getSettings()->getDefaultStockQuantity()
+        );
 
         $imagePath = $product->getImage();
-        $imageUrl = (!$imagePath || $imagePath == 'no_selection') ? '' : Mage::getModel('catalog/product_media_config')->getMediaUrl($imagePath);
+        $imageUrl = (!$imagePath || $imagePath == 'no_selection') ? 
+            '' : Mage::getModel('catalog/product_media_config')->getMediaUrl($imagePath);
 
         if ($hasParent && !$imageUrl) {
             $imagePath = $parent->getImage();
-            $imageUrl = (!$imagePath || $imagePath == 'no_selection') ? '' : Mage::getModel('catalog/product_media_config')->getMediaUrl($imagePath);
+            $imageUrl = (!$imagePath || $imagePath == 'no_selection') ? 
+                '' : Mage::getModel('catalog/product_media_config')->getMediaUrl($imagePath);
         }
 
         $images = array();
@@ -304,18 +414,26 @@ class Bidorbuy_StoreIntegrator_IndexController extends Mage_Core_Controller_Fron
     }
 
     /**
-     * @param Mage_Catalog_Model_Product $product
-     * @param int $default
+     * Calc Product Quantity
+     *
+     * @param Mage_Catalog_Model_Product $product product
+     * @param int $default default
+     *
      * @return int
      */
     private function calcProductQuantity($product, $default = 0) {
         $productStockModel = Mage::getModel('cataloginventory/stock_item')->loadByProduct($product);
         /* @var $productStockModel Mage_CatalogInventory_Model_Stock_Item */
-        return ($productStockModel->getManageStock()) ? (($productStockModel->getIsInStock()) ? $productStockModel->getQty() : 0) : $default;
+        return ($productStockModel->getManageStock()) 
+            ? (($productStockModel->getIsInStock()) 
+                ? $productStockModel->getQty() : 0) : $default;
     }
 
     /**
-     * @param Mage_Catalog_Model_Resource_Eav_Attribute $attribute
+     * Check product attribute
+     *
+     * @param Mage_Catalog_Model_Resource_Eav_Attribute $attribute attribute
+     *
      * @return boolean
      */
     public function isAttributeUsedInFeed($attribute) {
@@ -323,11 +441,16 @@ class Bidorbuy_StoreIntegrator_IndexController extends Mage_Core_Controller_Fron
             new Bidorbuy_StoreIntegrator_Model_Observer();
         }
 
-        return $attribute->getIsUserDefined() && is_numeric($attribute->getData(BIDORBUY_ATTR_IS_USED_IN_FEED_NAME)) && intval($attribute->getData(BIDORBUY_ATTR_IS_USED_IN_FEED_NAME)) > 0;
+        return $attribute->getIsUserDefined() 
+            && is_numeric($attribute->getData(BIDORBUY_ATTR_IS_USED_IN_FEED_NAME)) 
+            && intval($attribute->getData(BIDORBUY_ATTR_IS_USED_IN_FEED_NAME)) > 0;
     }
 
     /**
-     * @param Mage_Catalog_Model_Resource_Eav_Attribute $attribute
+     * Check product attribute
+     *
+     * @param Mage_Catalog_Model_Resource_Eav_Attribute $attribute attribute
+     *
      * @return boolean
      */
     public function isAttributeUsedInProductTitle($attribute) {
@@ -335,7 +458,9 @@ class Bidorbuy_StoreIntegrator_IndexController extends Mage_Core_Controller_Fron
             new Bidorbuy_StoreIntegrator_Model_Observer();
         }
 
-        return $attribute->getIsUserDefined() && is_numeric($attribute->getData(BIDORBUY_ATTR_IS_USED_IN_PRODUCT_TITLE_NAME)) && intval($attribute->getData(BIDORBUY_ATTR_IS_USED_IN_PRODUCT_TITLE_NAME)) > 0;
+        return $attribute->getIsUserDefined() 
+            && is_numeric($attribute->getData(BIDORBUY_ATTR_IS_USED_IN_PRODUCT_TITLE_NAME)) 
+            && intval($attribute->getData(BIDORBUY_ATTR_IS_USED_IN_PRODUCT_TITLE_NAME)) > 0;
     }
 
     /**

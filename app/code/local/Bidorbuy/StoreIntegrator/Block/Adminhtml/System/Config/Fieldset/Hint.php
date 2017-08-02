@@ -10,8 +10,11 @@
  *
  * Vendor: EXTREME IDEA LLC http://www.extreme-idea.com
  */
-class Bidorbuy_StoreIntegrator_Block_Adminhtml_System_Config_Fieldset_Hint extends Mage_Adminhtml_Block_Abstract implements Varien_Data_Form_Element_Renderer_Interface {
+class Bidorbuy_StoreIntegrator_Block_Adminhtml_System_Config_Fieldset_Hint extends Mage_Adminhtml_Block_Abstract
+    implements Varien_Data_Form_Element_Renderer_Interface {
+    //@codingStandardsIgnoreStart
     protected $_template = 'bidorbuy/system/config/fieldset/hint.phtml';
+    //@codingStandardsIgnoreEnd
 
     /**
      * Render fieldset html

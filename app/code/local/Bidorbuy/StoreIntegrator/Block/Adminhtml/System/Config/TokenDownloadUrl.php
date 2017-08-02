@@ -15,19 +15,34 @@ require_once(Mage::getModuleDir('', 'Bidorbuy_StoreIntegrator') . DS . 'Helper' 
 
 use com\extremeidea\bidorbuy\storeintegrator\core as bobsi;
 
-class Bidorbuy_StoreIntegrator_Block_Adminhtml_System_Config_TokenDownloadUrl extends Mage_Adminhtml_Block_System_Config_Form_Field {
+class Bidorbuy_StoreIntegrator_Block_Adminhtml_System_Config_TokenDownloadUrl
+    extends Mage_Adminhtml_Block_System_Config_Form_Field {
+
     /**
-     * @param Varien_Data_Form_Element_Abstract $element
+     * Download XML
+     * 
+     * @param Varien_Data_Form_Element_Abstract $element element
+     *
      * @return String
+     *
+     * @codingStandardsIgnoreStart
      */
     protected function _getElementHtml(Varien_Data_Form_Element_Abstract $element) {
+
+        //@codingStandardsIgnoreEnd
+        
         $tokenDownload = bobsi\StaticHolder::getBidorbuyStoreIntegrator()->getSettings()->getTokenDownload();
-        $url = Mage::getUrl('bidorbuystoreintegrator/index/download', array('_store' => 'default', bobsi\Settings::paramToken => $tokenDownload));
+        $url = Mage::getUrl('bidorbuystoreintegrator/index/download', array(
+            '_store' => 'default',
+            bobsi\Settings::paramToken => $tokenDownload
+        ));
 
         return '
-            <input type="hidden" readonly="readonly" name="groups[links][fields][tokenDownloadUrl][value]" id="bidorbuystoreintegrator_links_tokenDownloadUrl"
+            <input type="hidden" readonly="readonly" name="groups[links][fields][tokenDownloadUrl][value]" 
+            id="bidorbuystoreintegrator_links_tokenDownloadUrl"
                 value="' . $tokenDownload . '" />
-            <input type="text" readonly="readonly" name="tokenDownloadUrl" id="tokenDownloadUrl" value="' . $url . '" />
+            <input type="text" readonly="readonly" name="tokenDownloadUrl" id="tokenDownloadUrl" 
+            value="' . $url . '" />
 
             <button type="button" class="button launch-button">' . $this->__('Launch') . '</button>
             <button type="button" class="button copy-button">' . $this->__('Copy') . '</button>';

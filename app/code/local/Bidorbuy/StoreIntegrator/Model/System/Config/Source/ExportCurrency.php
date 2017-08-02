@@ -21,7 +21,10 @@ class Bidorbuy_StoreIntegrator_Model_System_Config_Source_ExportCurrency {
         $currencies = Mage::getBlockSingleton('directory/currency')->getCurrencies();
         if (!$currencies) {
             $currentCurrencyCode = Mage::getBlockSingleton('directory/currency')->getCurrentCurrencyCode();
-            $currencies = array($currentCurrencyCode => Mage::app()->getLocale()->getTranslation($currentCurrencyCode, 'nametocurrency'));
+            $currencies = array(
+                $currentCurrencyCode => 
+                    Mage::app()->getLocale()->getTranslation($currentCurrencyCode, 'nametocurrency')
+            );
         }
         foreach ($currencies as $code => $locale) {
             $arrayToReturn[] = array('value' => $code, 'label' => $locale . ' (' . $code . ')');

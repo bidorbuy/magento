@@ -5,8 +5,9 @@
  * This software is the proprietary information of Bidorbuy.
  *
  * All Rights Reserved.
- * Modification, redistribution and use in source and binary forms, with or without modification
- * are not permitted without prior written approval by the copyright holder.
+ * Modification, redistribution and use in source and binary forms, with or without
+ * modification are not permitted without prior written approval by the copyright
+ * holder.
  *
  * Vendor: EXTREME IDEA LLC http://www.extreme-idea.com
  */
@@ -42,25 +43,28 @@ class Bidorbuy_StoreIntegrator_Model_Observer {
             $settings[bobsi\Settings::nameExcludeCategories] = array();
         }
 
-        $settings[bobsi\Settings::nameExcludeCategories] = Mage::helper('storeintegrator/data')->getExportCategoriesIds($settings[bobsi\Settings::nameExcludeCategories]);
+        $settings[bobsi\Settings::nameExcludeCategories] = Mage::helper('storeintegrator/data')
+            ->getExportCategoriesIds($settings[bobsi\Settings::nameExcludeCategories]);
         $userName = Mage::getStoreConfig('bidorbuystoreintegrator/debug/username');
         $password = Mage::getStoreConfig('bidorbuystoreintegrator/debug/password');
-        
-            
+
+
         bobsi\StaticHolder::getBidorbuyStoreIntegrator()->getSettings()->unserialize(serialize($settings));
 
         bobsi\StaticHolder::getBidorbuyStoreIntegrator()->getSettings()->setUsername($userName);
         bobsi\StaticHolder::getBidorbuyStoreIntegrator()->getSettings()->setPassword($password);
-        
-        $value = bobsi\StaticHolder::getBidorbuyStoreIntegrator()->getSettings()->serialize(true);
-        Mage::getModel('core/config')->saveConfig('bidorbuystoreintegrator/exportConfiguration/encodedConfiguration', $value);
+
+        $value = bobsi\StaticHolder::getBidorbuyStoreIntegrator()->getSettings()->serialize(TRUE);
+        Mage::getModel('core/config')
+            ->saveConfig('bidorbuystoreintegrator/exportConfiguration/encodedConfiguration', $value);
 
         // reset tokens
         if (Mage::app()->getRequest()->getParam(bobsi\Settings::nameActionReset)) {
             bobsi\StaticHolder::getBidorbuyStoreIntegrator()->processAction(bobsi\Settings::nameActionReset);
 
-            $value = bobsi\StaticHolder::getBidorbuyStoreIntegrator()->getSettings()->serialize(true);
-            Mage::getModel('core/config')->saveConfig('bidorbuystoreintegrator/exportConfiguration/encodedConfiguration', $value);
+            $value = bobsi\StaticHolder::getBidorbuyStoreIntegrator()->getSettings()->serialize(TRUE);
+            Mage::getModel('core/config')
+                ->saveConfig('bidorbuystoreintegrator/exportConfiguration/encodedConfiguration', $value);
 
             Mage::getSingleton('core/session')->addSuccess('Tokens are successfully reset.');
         }
@@ -73,10 +77,11 @@ class Bidorbuy_StoreIntegrator_Model_Observer {
                         ? Mage::app()->getRequest()->getParam(bobsi\Settings::nameLoggingFormFilename)
                         : '');
 
-            $result = bobsi\StaticHolder::getBidorbuyStoreIntegrator()->processAction(Mage::app()->getRequest()->getParam(bobsi\Settings::nameLoggingFormAction), $data);
+            $result = bobsi\StaticHolder::getBidorbuyStoreIntegrator()
+                ->processAction(Mage::app()->getRequest()->getParam(bobsi\Settings::nameLoggingFormAction), $data);
 
             // clear previous messages if they exist.
-            Mage::getSingleton('core/session')->getMessages(true);
+            Mage::getSingleton('core/session')->getMessages(TRUE);
 
             foreach ($result as $warn) {
                 Mage::getSingleton('core/session')->addSuccess($warn);
@@ -84,13 +89,25 @@ class Bidorbuy_StoreIntegrator_Model_Observer {
         }
     }
 
-    // Add an extra field to new fieldset in accordance with Request #3633
+
+    /**
+     * Add an extra field to new fieldset in accordance with Request #3633
+     *
+     * @param Varien_Event_Observer $observer observer
+     *
+     * @return void
+     */
     public function addFieldsToAttributeEditForm(Varien_Event_Observer $observer) {
         $attrType = $observer->getEvent()->getAttribute()->getFrontendInput();
-        $model = $observer->getEvent()->getAttribute()->getSourceModel() ? $observer->getEvent()->getAttribute()->getSourceModel() : $observer->getEvent()->getAttribute()->getBackendModel();
+        $model = $observer->getEvent()->getAttribute()->getSourceModel() ?
+            $observer->getEvent()->getAttribute()->getSourceModel() :
+            $observer->getEvent()->getAttribute()->getBackendModel();
 
-        //'eav/entity_attribute_source_boolean' - for yesno attribute; 'eav/entity_attribute_backend_array' for multy select
-        $disabledUsedInTitleField = isset($model) && (strpos($model, 'backend_array') || strpos($model, 'source_boolean')) ? true : false;
+        //'eav/entity_attribute_source_boolean' - for yesno
+        // attribute; 'eav/entity_attribute_backend_array' for multy select
+        $disabledUsedInTitleField = isset($model)
+            && (strpos($model, 'backend_array')
+            || strpos($model, 'source_boolean')) ? TRUE : FALSE;
 
         if (isset($attrType) && is_string($attrType) && strpos($attrType, 'select') === FALSE) {
             return;
@@ -122,7 +139,7 @@ class Bidorbuy_StoreIntegrator_Model_Observer {
                 $block->addColumn(BIDORBUY_ATTR_IS_USED_IN_FEED_NAME, array(
                     'header' => Mage::helper('adminhtml')->__(BIDORBUY_ATTR_IS_USED_IN_FEED_LABEL),
                     'index' => BIDORBUY_ATTR_IS_USED_IN_FEED_NAME,
-                    'filter' => false,
+                    'filter' => FALSE,
                     'type' => 'options',
                     'options' => array(
                         '1' => Mage::helper('catalog')->__('Yes'),
@@ -135,7 +152,7 @@ class Bidorbuy_StoreIntegrator_Model_Observer {
                 $block->addColumn(BIDORBUY_ATTR_IS_USED_IN_PRODUCT_TITLE_NAME, array(
                     'header' => Mage::helper('adminhtml')->__(BIDORBUY_ATTR_IS_USED_IN_PRODUCT_TITLE_LABEL),
                     'index' => BIDORBUY_ATTR_IS_USED_IN_PRODUCT_TITLE_NAME,
-                    'filter' => false,
+                    'filter' => FALSE,
                     'type' => 'options',
                     'options' => array(
                         '1' => Mage::helper('catalog')->__('Yes'),

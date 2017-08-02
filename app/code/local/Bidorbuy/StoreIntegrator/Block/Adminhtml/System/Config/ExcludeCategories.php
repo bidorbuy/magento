@@ -10,7 +10,8 @@
  *
  * Vendor: EXTREME IDEA LLC http://www.extreme-idea.com
  */
-class Bidorbuy_StoreIntegrator_Block_Adminhtml_System_Config_ExcludeCategories extends Mage_Adminhtml_Block_System_Config_Form_Field {
+class Bidorbuy_StoreIntegrator_Block_Adminhtml_System_Config_ExcludeCategories
+    extends Mage_Adminhtml_Block_System_Config_Form_Field {
     /*
     * Set template
     */

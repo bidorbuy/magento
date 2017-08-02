@@ -15,17 +15,31 @@ require_once(Mage::getModuleDir('', 'Bidorbuy_StoreIntegrator') . DS . 'Helper' 
 
 use com\extremeidea\bidorbuy\storeintegrator\core as bobsi;
 
-class Bidorbuy_StoreIntegrator_Block_Adminhtml_System_Config_TokenExportUrl extends Mage_Adminhtml_Block_System_Config_Form_Field {
+class Bidorbuy_StoreIntegrator_Block_Adminhtml_System_Config_TokenExportUrl
+    extends Mage_Adminhtml_Block_System_Config_Form_Field {
+
     /**
-     * @param Varien_Data_Form_Element_Abstract $element
+     * Export field
+     * 
+     * @param Varien_Data_Form_Element_Abstract $element element
+     *
      * @return String
+     * 
+     * @codingStandardsIgnoreStart
      */
     protected function _getElementHtml(Varien_Data_Form_Element_Abstract $element) {
+
+        //@codingStandardsIgnoreEnd
+        
         $tokenExport = bobsi\StaticHolder::getBidorbuyStoreIntegrator()->getSettings()->getTokenExport();
-        $url = Mage::getUrl('bidorbuystoreintegrator/index/export', array('_store' => 'default', bobsi\Settings::paramToken => $tokenExport));
+        $url = Mage::getUrl('bidorbuystoreintegrator/index/export', array(
+            '_store' => 'default',
+                bobsi\Settings::paramToken => $tokenExport)
+        );
 
         return '
-            <input type="hidden" name="groups[links][fields][tokenExportUrl][value]" id="bidorbuystoreintegrator_links_tokenExportUrl"
+            <input type="hidden" name="groups[links][fields][tokenExportUrl][value]" 
+            id="bidorbuystoreintegrator_links_tokenExportUrl"
                 value="' . $tokenExport . '">
             <input type="text" readonly="readonly" name="tokenExportUrl" id="tokenExportUrl" value="' . $url . '" />
 

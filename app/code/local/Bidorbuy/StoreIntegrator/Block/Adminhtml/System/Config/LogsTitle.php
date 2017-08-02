@@ -11,8 +11,14 @@
  * Vendor: EXTREME IDEA LLC http://www.extreme-idea.com
  */
 
-class Bidorbuy_StoreIntegrator_Block_Adminhtml_System_Config_LogsTitle extends Mage_Adminhtml_Block_System_Config_Form_Field {
+class Bidorbuy_StoreIntegrator_Block_Adminhtml_System_Config_LogsTitle
+    extends Mage_Adminhtml_Block_System_Config_Form_Field {
+
     /**
+     * Logs title
+     * 
+     * @param Varien_Data_Form_Element_Abstract $element element
+     *
      * @return String
      */
     protected function _getElementHtml( Varien_Data_Form_Element_Abstract $element ) {

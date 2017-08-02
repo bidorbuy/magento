@@ -11,12 +11,12 @@ To make use of this plugin, you'll need to be an advanced seller on bidorbuy.
  * [Register on bidorbuy](https://www.bidorbuy.co.za/jsp/registration/UserRegistration.jsp?action=Modify)
  * [Apply to become an advanced seller](https://www.bidorbuy.co.za/jsp/seller/registration/UserSellersRequest.jsp)
  * Once you integrate with bidorbuy, you will be contacted by a bidorbuy representative to guide you through the process.
- 
+
 ### System requirements
 
-Minimum PHP version required: 5.3.0.
+Supported PHP versions: 5.4, 7.0
 
-PHP extensions: curl, mbstring.
+PHP extensions: curl, mbstring
 
 ### Installation
 
@@ -49,4 +49,3 @@ To upgrade the plugin please uninstall it and re-install the archive. Please loo
 6. Press the `Download` button.
 7. Share Export Links with bidorbuy.
 8. To display BAA fields on the setting page add '/baa/1' to URL in address bar.
-

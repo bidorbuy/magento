@@ -5,21 +5,32 @@
  * This software is the proprietary information of Bidorbuy.
  *
  * All Rights Reserved.
- * Modification, redistribution and use in source and binary forms, with or without modification
- * are not permitted without prior written approval by the copyright holder.
+ * Modification, redistribution and use in source and binary forms, with or without
+ * modification are not permitted without prior written approval by the copyright
+ * holder.
  *
  * Vendor: EXTREME IDEA LLC http://www.extreme-idea.com
  */
 
 use com\extremeidea\bidorbuy\storeintegrator\core as bobsi;
 
-class Bidorbuy_StoreIntegrator_Block_Adminhtml_System_Config_Links extends Mage_Adminhtml_Block_System_Config_Form_Fieldset {
+/**
+ * Class Bidorbuy_StoreIntegrator_Block_Adminhtml_System_Config_Links.
+ */
+class Bidorbuy_StoreIntegrator_Block_Adminhtml_System_Config_Links 
+    extends Mage_Adminhtml_Block_System_Config_Form_Fieldset {
     /**
-     * @param Varien_Data_Form_Element_Abstract $element
+     * Get footer html
+     *
+     * @param Varien_Data_Form_Element_Abstract $element element
+     *
      * @return String
+     *
+     * @codingStandardsIgnoreStart
      */
     protected function _getFooterHtml($element) {
-        $tooltipsExist = false;
+        //@codingStandardsIgnoreEnd
+        $tooltipsExist = FALSE;
         $html = '</tbody></table>';
         $html .= '<input type="hidden" 
 		    name="' . bobsi\Settings::nameActionReset . '"

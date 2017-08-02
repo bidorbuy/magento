@@ -21,7 +21,13 @@ class Bidorbuy_StoreIntegrator_Helper_Data extends Mage_Core_Helper_Abstract {
             $ids = array();
         }
 
-        $categoriesIds = array_merge(Mage::getModel('catalog/category')->getTreeModel()->load()->getCollection()->getAllIds(), array('0'));
+        $categoriesIds = array_merge(Mage::getModel('catalog/category')
+            ->getTreeModel()
+            ->load()
+            ->getCollection()
+            ->getAllIds(),
+            array('0')
+        );
         return array_values(array_diff($categoriesIds, $ids));
     }
 

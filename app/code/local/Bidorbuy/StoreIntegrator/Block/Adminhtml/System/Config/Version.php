@@ -15,9 +15,14 @@ require_once(Mage::getModuleDir('', 'Bidorbuy_StoreIntegrator') . DS . 'Helper' 
 
 use com\extremeidea\bidorbuy\storeintegrator\core as bobsi;
 
-class Bidorbuy_StoreIntegrator_Block_Adminhtml_System_Config_Version extends Mage_Adminhtml_Block_System_Config_Form_Fieldset {
+class Bidorbuy_StoreIntegrator_Block_Adminhtml_System_Config_Version 
+    extends Mage_Adminhtml_Block_System_Config_Form_Fieldset {
+    
     /**
-     * @param Varien_Data_Form_Element_Abstract $element
+     * Version fieldset 
+     * 
+     * @param Varien_Data_Form_Element_Abstract $element element 
+     *                                                   
      * @return String
      */
     protected function _getFooterHtml($element) {

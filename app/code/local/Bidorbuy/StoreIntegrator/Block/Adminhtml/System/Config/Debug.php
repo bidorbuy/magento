@@ -15,8 +15,14 @@
  * Class Bidorbuy_StoreIntegrator_Block_Adminhtml_System_Config_Debug
  * @deprecated after feature 3910
  */
-class Bidorbuy_StoreIntegrator_Block_Adminhtml_System_Config_Debug extends Mage_Adminhtml_Block_System_Config_Form_Field {
+class Bidorbuy_StoreIntegrator_Block_Adminhtml_System_Config_Debug
+    extends Mage_Adminhtml_Block_System_Config_Form_Field {
+
     /**
+     * BAA fieldset
+     *
+     * @param  Varien_Data_Form_Element_Abstract $element element
+     *                                                    
      * @return String
      */
     protected function _getElementHtml( Varien_Data_Form_Element_Abstract $element ) {

@@ -18,6 +18,7 @@ use com\extremeidea\bidorbuy\storeintegrator\core as bobsi;
 class Bidorbuy_StoreIntegrator_Block_Adminhtml_System_Config_Baa extends Mage_Adminhtml_Block_System_Config_Form_Field {
     /**
      * @param Varien_Data_Form_Element_Abstract $element
+     *
      * @return String
      */
     protected function _getElementHtml(Varien_Data_Form_Element_Abstract $element) {
@@ -39,10 +40,13 @@ class Bidorbuy_StoreIntegrator_Block_Adminhtml_System_Config_Baa extends Mage_Ad
              
             <tr id='row_bidorbuystoreintegrator_debug_username'>
                 <td class='label'><label for='bidorbuystoreintegrator_debug_username'> Username</label></td>
-                <td class='value'><input id='bidorbuystoreintegrator_debug_username' name='groups[debug][fields][username][value]' class=' input-text' type='text' value='$userName'>
+                <td class='value'><input id='bidorbuystoreintegrator_debug_username' 
+                    name='groups[debug][fields][username][value]' class=' input-text' type='text' value='$userName'>
                     <p class='note'>
                         <span>
-                          Please specify the username if your platform is protected by <a href='http://en.wikipedia.org/wiki/Basic_access_authentication' target='_blank'>Basic Access Authentication</a>
+                          Please specify the username if your platform is protected by 
+                          <a href='http://en.wikipedia.org/wiki/Basic_access_authentication' 
+                          target='_blank'>Basic Access Authentication</a>
                      </span>
                  </p>
             </td>
@@ -50,16 +54,20 @@ class Bidorbuy_StoreIntegrator_Block_Adminhtml_System_Config_Baa extends Mage_Ad
                             
             <tr id='row_bidorbuystoreintegrator_debug_password'>
                 <td class='label'><label for='bidorbuystoreintegrator_debug_password'> Password</label></td>
-                <td class='value'><input id='bidorbuystoreintegrator_debug_password' name='groups[debug][fields][password][value]'  class=' validate-password input-text' type='password' value='$password'>
+                <td class='value'><input id='bidorbuystoreintegrator_debug_password' 
+                name='groups[debug][fields][password][value]'  class=' validate-password input-text' 
+                type='password' value='$password'>
                    <p class='note'>
                        <span>
-                           Please specify the password if your platform is protected by <a href='http://en.wikipedia.org/wiki/Basic_access_authentication' target='_blank'>Basic Access Authentication</a>
+                           Please specify the password if your platform is protected by 
+                           <a href='http://en.wikipedia.org/wiki/Basic_access_authentication' 
+                           target='_blank'>Basic Access Authentication</a>
                        </span>
                    </p>
                 </td>
             </tr>         
              ";
 
-        return $this->getRequest()->getParam('baa', false) ? $html : '';
+        return $this->getRequest()->getParam('baa', FALSE) ? $html : '';
     }
 }

@@ -5,8 +5,9 @@
  * This software is the proprietary information of Bidorbuy.
  *
  * All Rights Reserved.
- * Modification, redistribution and use in source and binary forms, with or without modification
- * are not permitted without prior written approval by the copyright holder.
+ * Modification, redistribution and use in source and binary forms, with or without
+ * modification are not permitted without prior written approval by the copyright
+ * holder.
  *
  * Vendor: EXTREME IDEA LLC http://www.extreme-idea.com
  */
@@ -15,16 +16,31 @@ require_once(Mage::getModuleDir('', 'Bidorbuy_StoreIntegrator') . DS . 'Helper' 
 
 use com\extremeidea\bidorbuy\storeintegrator\core as bobsi;
 
-class Bidorbuy_StoreIntegrator_Block_Adminhtml_System_Config_Logs extends Mage_Adminhtml_Block_System_Config_Form_Fieldset {
+/**
+ * Class Bidorbuy_StoreIntegrator_Block_Adminhtml_System_Config_Logs.
+ */
+class Bidorbuy_StoreIntegrator_Block_Adminhtml_System_Config_Logs
+    extends Mage_Adminhtml_Block_System_Config_Form_Fieldset {
+
     /**
-     * @param Varien_Data_Form_Element_Abstract $element
+     * Get Footer Html
+     *
+     * @param Varien_Data_Form_Element_Abstract $element element
+     *
      * @return String
+     *
+     * @codingStandardsIgnoreStart
      */
     protected function _getFooterHtml($element) {
-        $tooltipsExist = false;
+        // @codingStandardsIgnoreEnd
+        $tooltipsExist = FALSE;
         $html = '</tbody></table>';
 
-        $logsHtml = preg_replace('/<form[^>]+\>/i', '', bobsi\StaticHolder::getBidorbuyStoreIntegrator()->getLogsHtml());
+        $logsHtml = preg_replace(
+            '/<form[^>]+\>/i', 
+            '', 
+            bobsi\StaticHolder::getBidorbuyStoreIntegrator()->getLogsHtml()
+        );
         $logsHtml = str_replace('</form>', '', $logsHtml);
 
         $html .= $logsHtml;
