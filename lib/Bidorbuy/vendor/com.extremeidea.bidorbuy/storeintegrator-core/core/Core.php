@@ -580,18 +580,26 @@ class Core {
 
         $pagination = 100000; // implement pagination to prevent database disconnects
         $count = $this->dbLink->executeS($this->queries->getXmlViewDataCountQuery(), TRUE);
+
         $count = ceil($count[0][Queries::ROW_NAME] / $pagination);
-
+        $productsCount = 0;
         for ($i = 0; $i < $count; $i++) {
-            $result = $this->dbLink->query($this->getQueries()
-                ->getXmlViewDataQuery($exportConfiguration[Settings::paramCategories]) . ' LIMIT ' . $i
-                * $pagination . ', ' . $pagination, TRUE);
+            $sqlQuery = $this->getQueries()->getXmlViewDataQuery(
+                    $exportConfiguration[Settings::paramCategories])
+                . ' LIMIT ' . $i * $pagination . ', ' . $pagination;
 
+            $result = $this->dbLink->query($sqlQuery, TRUE);
+            if (!$result) {
+                $this->logError("Database Error: {$this->dbLink->getLastError()}");
+                $this->logInfo("SQL query: {$sqlQuery}");
+            }
             while ($row = $this->dbLink->nextRow($result)) {
+                $productsCount++;
                 fwrite($resource, $row[Queries::ROW_NAME]);
             }
         }
-
+        $this->logInfo("Product pages: $count, products exported: $productsCount");
+        
         fwrite($resource, $this->tradefeed->createEndProductsTag());
         fwrite($resource, $this->tradefeed->createEndRootTag());
         fclose($resource);
@@ -895,6 +903,33 @@ class Core {
                 $r = $exportConfiguration);
 
             if ($products && is_array($products) && !empty($products)) {
+
+                /**
+                 * Defect #4409: Database error: bobsi plugins don't controlled data, that send to Core.
+                 * If product price <= 0, platforms pass array only with description, after saved description func do
+                 * unset and pass empty array to store in Database that cause Database error.
+                 *
+                 * Temporary fix in Core.
+                 */
+
+                if (count($products) == 2
+                    && array_key_exists(Tradefeed::nameProductSummary, $products)
+                    && array_key_exists(Tradefeed::nameProductDescription, $products)
+                ) {
+                    //Array contains only description product is absent
+                    $this->logger->warning(
+                        $this->guid
+                        . ': '
+                        . 'Defect #4409: Pass empty array to store in Database. Skipped...'
+                    ); // Log
+
+                    continue; // Skip
+                }
+
+                /**
+                 * End Defect 4409
+                 */
+
                 $productsData = array();
                 $keys = array_keys($this->buildArrayToInsert($productsData, FALSE));
 
@@ -1030,14 +1065,36 @@ class Core {
         $this->callExit();
     }
 
+    /**
+     * Log info message
+     *
+     * @param string $message message
+     * @param mixed $data data to log
+     *
+     * @return void
+     */
     public function logInfo($message, $data = '') {
         $this->logger->info($this->guid . ': ' . $message . ' ' . $this->joinData($data));
     }
 
+    /**
+     * Log Error message
+     *
+     * @param string $message message
+     *
+     * @return void
+     */
     public function logError($message) {
         $this->logger->error($this->guid . ': ' . $message);
     }
 
+    /**
+     * Log fatal error
+     * 
+     * @param string $message message
+     *                        
+     * @return void
+     */
     public function logFatal($message) {
         $this->logger->fatal($this->guid . ': ' . $message);
     }
@@ -1474,6 +1531,14 @@ class Core {
         return $ssga;
     }
 
+    /**
+     * Format bytes
+     *
+     * @param resource $file file
+     * @param string $type type
+     *
+     * @return int|string
+     */
     private function formatbytes($file, $type) {
         switch ($type) {
             case "KB":
@@ -1653,7 +1718,7 @@ class Core {
 
     /**
      * Remove Products
-     * 
+     *
      * @param mixed $ids ids
      *
      * @return void
