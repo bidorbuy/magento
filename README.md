@@ -1,7 +1,14 @@
 # Magento bidorbuy Store Integrator
 
 ### Compatibility
-Magento 1.7.x, 1.9.x
+
+| Product | PHP version  | Platform |
+| ------- | --- | --- |
+| Store Integrator-2.0.9 | 5.4, 7.0 for Magento 1.9 only|✓ Magento 1.7, 1.9 |
+| Store Integrator-2.0.8 | 5.4, 7.0 for Magento 1.9 only|✓ Magento 1.7, 1.9 |
+| Store Integrator-2.0.7 | 5.4, 7.0 for Magento 1.9 only |✓ Magento 1.7, 1.9 |
+| Store Integrator-2.0.6 | 5.4 | ✓ Magento 1.7, 1.9 |
+
 
 ### Description
 The bidorbuy Store Integrator allows you to get products from your online store listed on bidorbuy quickly and easily.
