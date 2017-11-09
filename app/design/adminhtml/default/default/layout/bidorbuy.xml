@@ -1,0 +1,17 @@
+<?xml version="1.0" ?>
+<layout verion="0.1.0">
+    <adminhtml_system_config_edit>
+        <reference name="head">
+            <action method="setCanLoadExtJs">
+                <flag>true</flag>
+            </action>
+            <action method="addItem">
+                <type>skin_js</type>
+                <name>bidorbuy/admin.js</name>
+            </action>
+            <action method="addCss">
+                <stylesheet>bidorbuy/admin.css</stylesheet>
+            </action>
+        </reference>
+    </adminhtml_system_config_edit>
+</layout>

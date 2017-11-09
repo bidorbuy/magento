@@ -1,0 +1,151 @@
+<?xml version="1.0"?>
+
+<config>
+    <modules>
+        <Bidorbuy_StoreIntegrator>
+            <version>2.0.10</version>
+        </Bidorbuy_StoreIntegrator>
+    </modules>
+
+    <global>
+        <models>
+            <storeintegrator>
+                <class>Bidorbuy_StoreIntegrator_Model</class>
+            </storeintegrator>
+        </models>
+        <helpers>
+            <storeintegrator>
+                <class>Bidorbuy_StoreIntegrator_Helper</class>
+            </storeintegrator>
+        </helpers>
+        <blocks>
+            <storeintegrator>
+                <class>Bidorbuy_StoreIntegrator_Block</class>
+            </storeintegrator>
+        </blocks>
+
+        <events>
+            <admin_system_config_changed_section_bidorbuystoreintegrator>
+                <observers>
+                    <storeintegrator>
+                        <type>singleton</type>
+                        <class>storeintegrator/observer</class>
+                        <method>handleAdminSystemConfigChangedSection</method>
+                    </storeintegrator>
+                </observers>
+            </admin_system_config_changed_section_bidorbuystoreintegrator>
+        </events>
+
+        <resources>
+            <bidorbuy_setup>
+                <setup>
+                    <module>Bidorbuy_StoreIntegrator</module>
+                    <class>Mage_Eav_Model_Entity_Setup</class>
+                </setup>
+            </bidorbuy_setup>
+        </resources>
+    </global>
+
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <!-- Please keep the value on the same line, otherwise magento engine
+                            cannot register this properly doesn't work. -->
+                        <Bidorbuy_StoreIntegrator before="Mage_Adminhtml">Bidorbuy_StoreIntegrator_Adminhtml</Bidorbuy_StoreIntegrator>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+
+    <adminhtml>
+        <events>
+            <adminhtml_catalog_product_attribute_edit_prepare_form>
+                <observers>
+                    <add_bidorbuy_extra_fields>
+                        <type>singleton</type>
+                        <class>storeintegrator/observer</class>
+                        <method>addFieldsToAttributeEditForm</method>
+                    </add_bidorbuy_extra_fields>
+                </observers>
+            </adminhtml_catalog_product_attribute_edit_prepare_form>
+            <core_collection_abstract_load_after>
+                <observers>
+                    <load_bidorbuy_extra_fields>
+                         <!--Add bidorbuy fields to process-->
+                        <class>storeintegrator/observer</class>
+                        <method>loadBidorbuyFields</method>
+                    </load_bidorbuy_extra_fields>
+                </observers>
+            </core_collection_abstract_load_after>
+            <adminhtml_block_html_before>
+                <observers>
+                    <add_bidorbuy_extra_fields_to_grid>
+                        <!-- Add extra columns to Catalog-Attributes-Manage Attributes grid -->
+                        <class>storeintegrator/observer</class>
+                        <method>addColumnsToGrid</method>
+                    </add_bidorbuy_extra_fields_to_grid>
+                </observers>
+            </adminhtml_block_html_before>
+        </events>
+
+        <layout>
+            <updates>
+                <storeintegrator>
+                    <file>bidorbuy.xml</file>
+                </storeintegrator>
+            </updates>
+        </layout>
+        <acl>
+            <resources>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <bidorbuystoreintegrator>
+                                            <title>bidorbuy Store Integrator</title>
+                                        </bidorbuystoreintegrator>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+    </adminhtml>
+
+    <frontend>
+        <routers>
+            <storeintegrator>
+                <use>standard</use>
+                <args>
+                    <module>Bidorbuy_StoreIntegrator</module>
+                    <frontName>bidorbuystoreintegrator</frontName>
+                </args>
+            </storeintegrator>
+        </routers>
+    </frontend>
+
+    <default>
+        <bidorbuystoreintegrator>
+            <exportConfiguration>
+                <filename>tradefeed</filename>
+                <defaultStockQuantity>5</defaultStockQuantity>
+                <loggingLevel>error</loggingLevel>
+                <compressLibrary>none</compressLibrary>
+                <encodedConfiguration>
+                    YToxNjp7czo3OiJ2ZXJzaW9uIjtzOjM6IjEuMCI7czo4OiJ1c2VybmFtZSI7czowOiIiO3M6ODoicGFzc3dvcmQiO3M6MDoiIjtzOjg6ImN1cnJlbmN5IjtzOjA6IiI7czo4OiJmaWxlbmFtZSI7czo5OiJ0cmFkZWZlZWQiO3M6MTU6ImNvbXByZXNzTGlicmFyeSI7czo0OiJub25lIjtzOjIwOiJkZWZhdWx0U3RvY2tRdWFudGl0eSI7czoxOiI1IjtzOjIyOiJleHBvcnRRdWFudGl0eU1vcmVUaGFuIjtzOjE6IjAiO3M6MTQ6ImV4cG9ydFN0YXR1c2VzIjthOjA6e31zOjE4OiJleHBvcnRWaXNpYmlsaXRpZXMiO2E6MDp7fXM6MTc6ImV4Y2x1ZGVDYXRlZ29yaWVzIjthOjE6e2k6MDtzOjE6IjEiO31zOjI0OiJlbmFibGVFbWFpbE5vdGlmaWNhdGlvbnMiO3M6MToiMCI7czoyNzoiZW5hYmxlTm90aWZpY2F0aW9uQWRkcmVzc2VzIjtzOjA6IiI7czoxMjoibG9nZ2luZ0xldmVsIjtzOjU6ImVycm9yIjtzOjE2OiJ0b2tlbkRvd25sb2FkVXJsIjtzOjMyOiJlNDk3YmI1ZDUxMjZkMDA1N2FlM2ZlODNmZjhlYjAxYSI7czoxNDoidG9rZW5FeHBvcnRVcmwiO3M6MzI6ImE2NzUyYmVlMmE5YWQwZWJlZWM3NzE3NWRhMTY0MDUxIjt9
+                </encodedConfiguration>
+            </exportConfiguration>
+            <exportCriteria>
+                <exportQuantityMoreThan>0</exportQuantityMoreThan>
+                <excludeCategories></excludeCategories>
+            </exportCriteria>
+        </bidorbuystoreintegrator>
+    </default>
+</config>

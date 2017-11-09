@@ -4,10 +4,11 @@
 
 | Product | PHP version  | Platform |
 | ------- | --- | --- |
-| Store Integrator-2.0.9 | 5.4, 7.0 for Magento 1.9 only|✓ Magento 1.7, 1.9 |
-| Store Integrator-2.0.8 | 5.4, 7.0 for Magento 1.9 only|✓ Magento 1.7, 1.9 |
-| Store Integrator-2.0.7 | 5.4, 7.0 for Magento 1.9 only |✓ Magento 1.7, 1.9 |
-| Store Integrator-2.0.6 | 5.4 | ✓ Magento 1.7, 1.9 |
+| Store Integrator-2.0.10 | 5.4, (7.0 -> Magento 1.9)|✓ Magento 1.7.0.2, 1.9.1.0 |
+| Store Integrator-2.0.9  | 5.4, (7.0 -> Magento 1.9)|✓ Magento 1.7.0.2, 1.9.1.0 |
+| Store Integrator-2.0.8  | 5.4, (7.0 -> Magento 1.9)|✓ Magento 1.7.0.2, 1.9.1.0 |
+| Store Integrator-2.0.7  | 5.4, (7.0 -> Magento 1.9)|✓ Magento 1.7.0.2, 1.9.1.0 |
+| Store Integrator-2.0.6  | 5.4                      |✓ Magento 1.7.0.2, 1.9.1.0 |
 
 
 ### Description

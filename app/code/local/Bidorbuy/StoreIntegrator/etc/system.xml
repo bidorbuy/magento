@@ -1,0 +1,226 @@
+<?xml version="1.0" ?>
+<config>
+    <!-- http://excellencemagentoblog.com/blog/2011/09/22/magento-part8-series-systemxml/ -->
+    <!-- http://alanstorm.com/magento_system_configuration_in_depth_tutorial -->
+    <tabs>
+        <bidorbuytab module="storeintegrator" translate="label">
+            <label>bidorbuy</label>
+            <sort_order>100</sort_order>
+        </bidorbuytab>
+    </tabs>
+    <sections>
+        <bidorbuystoreintegrator module="storeintegrator" translate="label">
+            <label>bidorbuy Store Integrator</label>
+            <tab>bidorbuytab</tab>
+            <sort_order>100</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <header_css>bidorbuy-header</header_css>
+            <groups>
+                <hint>
+                    <frontend_model>storeintegrator/adminhtml_system_config_fieldset_hint</frontend_model>
+                    <sort_order>0</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                </hint>
+                <exportConfiguration translate="label">
+                    <label>Export Configuration</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <expanded>1</expanded>
+                    <fields>
+
+                        <filename translate="label comment">
+                            <label>Filename</label>
+                            <sort_order>30</sort_order>
+                            <comment>
+                                <![CDATA[16 characters max. Must start with a letter. Can contain letters, digits, "-" and "_"]]>
+                            </comment>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <frontend_type>text</frontend_type>
+                            <validate>required-entry validate-filename validate-length maximum-length-16</validate>
+                        </filename>
+                        <compressLibrary translate="label comment">
+                            <label>Compress Tradefeed XML</label>
+                            <sort_order>40</sort_order>
+                            <comment>Choose a Compress Library to compress destination Tradefeed XML</comment>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <frontend_type>select</frontend_type>
+                            <source_model>storeintegrator/system_config_source_compressLibrary</source_model>
+                        </compressLibrary>
+                        <defaultStockQuantity translate="label comment">
+                            <label>Min quantity in stock</label>
+                            <sort_order>50</sort_order>
+                            <comment>Set minimum quantity if quantity management is turned OFF</comment>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <frontend_type>text</frontend_type>
+                            <validate>required-entry validate-digits validate-zero-or-greater</validate>
+                        </defaultStockQuantity>
+
+                        <exportCurrency translate="label comment">
+                            <label>Export in Currency</label>
+                            <comment>Export product prices in custom currency</comment>
+                            <sort_order>90</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <frontend_type>select</frontend_type>
+                            <source_model>storeintegrator/system_config_source_exportCurrency</source_model>
+                            <validate>validate-select</validate>
+                        </exportCurrency>
+                        <encodedConfiguration>
+                            <sort_order>100</sort_order>
+                            <show_in_default>0</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <frontend_type>hidden</frontend_type>
+                        </encodedConfiguration>
+                    </fields>
+                </exportConfiguration>
+                <exportCriteria translate="label">
+                    <label>Export Criteria</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>20</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <expanded>1</expanded>
+                    <fields>
+                        <exportQuantityMoreThan translate="label">
+                            <label>Export products with available quantity more than</label>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <frontend_type>text</frontend_type>
+                            <validate>required-entry validate-digits validate-zero-or-greater</validate>
+                        </exportQuantityMoreThan>
+                        <excludeCategories translate="label">
+                            <label>Included Categories</label>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <frontend_model>storeintegrator/adminhtml_system_config_excludeCategories</frontend_model>
+                            <validate>validate-select</validate>
+                        </excludeCategories>
+                    </fields>
+                </exportCriteria>
+                <links translate="label">
+                    <label>Links</label>
+                    <frontend_type>text</frontend_type>
+                    <frontend_model>storeintegrator/adminhtml_system_config_links</frontend_model>
+                    <sort_order>30</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <expanded>1</expanded>
+                    <fields>
+                        <tokenExportUrl translate="label">
+                            <label>Export</label>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <frontend_type>text</frontend_type>
+                            <frontend_model>storeintegrator/adminhtml_system_config_tokenExportUrl</frontend_model>
+                        </tokenExportUrl>
+                        <tokenDownloadUrl translate="label">
+                            <label>Download</label>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <frontend_type>text</frontend_type>
+                            <frontend_model>storeintegrator/adminhtml_system_config_tokenDownloadUrl</frontend_model>
+                        </tokenDownloadUrl>
+                    </fields>
+                </links>
+
+                <debug translate="label">
+                    <label>Debug</label>
+
+                    <fields>
+
+                        <baa translate="label">
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <frontend_type>text</frontend_type>
+                            <frontend_model>storeintegrator/adminhtml_system_config_Baa</frontend_model>
+                        </baa>
+
+                        <logtitle translate="label">
+                            <frontend_model>storeintegrator/adminhtml_system_config_LogsTitle</frontend_model>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <expanded>1</expanded>
+                        </logtitle>
+
+                        <enableNotificationAddresses translate="label comment">
+                            <label>Send logs to email address(es)</label>
+                            <sort_order>60</sort_order>
+                            <comment>Specify email address(es) separated by comma to send the log entries to</comment>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <frontend_type>text</frontend_type>
+                        </enableNotificationAddresses>
+                        <enableEmailNotifications translate="label">
+                            <label>Turn on/off email notifications</label>
+                            <sort_order>70</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <frontend_type>radios</frontend_type>
+                            <source_model>storeintegrator/system_config_source_onOff</source_model>
+                        </enableEmailNotifications>
+                        <loggingLevel translate="label comment">
+                            <label>Logging Level</label>
+                            <comment>
+                                <![CDATA[A level describes the severity of a logging message. There are six levels, show here in descending order of severity]]>
+                            </comment>
+                            <sort_order>80</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <frontend_type>select</frontend_type>
+                            <source_model>storeintegrator/system_config_source_loggingLevel</source_model>
+                            <validate>validate-select</validate>
+                        </loggingLevel>
+
+                    </fields>
+                    <frontend_model>storeintegrator/adminhtml_system_config_logs</frontend_model>
+                    <sort_order>40</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <expanded>1</expanded>
+                </debug>
+                <version translate="label">
+                    <label>Version</label>
+                    <frontend_model>storeintegrator/adminhtml_system_config_version</frontend_model>
+                    <sort_order>50</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <expanded>1</expanded>
+                </version>
+            </groups>
+        </bidorbuystoreintegrator>
+    </sections>
+</config>
